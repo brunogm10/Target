@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Exemplo em HTML e JavaScript</title>
+</head>
+<body>
+    <h1>Tópico 1</h1>
+
+    <script>
+        //Variaveis
+        var indice = 13;
+        var soma = 0;
+        var k = 0;
+
+        while (k < indice) {
+            k++;
+            soma += k;
+        }
+
+        //Exibe o resultado
+        document.write("<h2>Resultado</h2>");
+        document.write("<p>Indice: " + indice + "</p>");
+        document.write("<p>Soma: " + soma + "</p>");
+    </script>
+
+    <h1>Tópico 2 - Fibonacci</h1>
+
+    <script>
+        // Sequencia de Fibonacci
+        var numero = 35;
+        var anterior = 0;
+        var atual = 1;
+        var proximo = 0;
+        var lista = "";
+        var resultado = "";
+
+        while (anterior < numero + proximo) {
+            lista += anterior + ";";
+            proximo = anterior + atual;
+            anterior = atual;
+            atual = proximo;
+        }
+
+        //Verifica se o numero existe na Lista
+        if (lista.indexOf(';'+numero + ';') !== -1)
+            resultado = "O número " + numero + " existe na sequência de Fibonacci";
+        else
+            resultado = "O número " + numero + " não existe na sequência de Fibonacci";
+
+        document.write(resultado);
+    </script>
+
+    <h1>Tópico 3</h1>
+
+    <script>
+        //carrega arquivo de texto dados.json
+        var file = new XMLHttpRequest();
+        file.open("GET", "dados.json", false);
+        file.send(null);
+                
+        //Converte o arquivo para JSON e armazena na variavel json
+        var obj = JSON.parse(file.responseText);
+
+        // convert object to array
+        var json = Object.keys(obj).map(function (key) {
+            return obj[key];
+        });
+
+        //Variaveis
+        var menorValor = {
+            dia: 0,
+            valor: 0
+        };
+
+        var maiorValor = {
+            dia: 0,
+            valor: 0
+        };
+
+        //Busca o maior valor
+        json.forEach(function (value, key) {
+            if ((value > maiorValor.valor && value !== 0)) {
+                maiorValor.dia = key;
+                maiorValor.valor = value;
+            }
+        });
+
+        //Busca o menor valor
+        json.forEach(function (value, key) {
+            if ((value < maiorValor.valor && value !== 0) && (value < menorValor.valor || menorValor.valor === 0)) {
+                menorValor.dia = key;
+                menorValor.valor = value;
+            }
+        });
+
+        
+
+        //Criar análise de Dados
+        var semFaturamento = 0;
+        var comFaturamento = 0;
+        var totalFaturado = 0.0;
+        var mediaFaturado = 0.0;
+        var diasAcimaMedia = [];
+
+        //Conta os valores faturados e somatória
+        json.forEach(function (value) {
+            if (value == 0)
+                semFaturamento++;
+            else
+                comFaturamento++;
+
+            totalFaturado += value;
+        });
+
+        //Cria a média dos valores faturados
+        mediaFaturado = totalFaturado / comFaturamento;
+
+        //Busca os dias acima da média
+        json.forEach(function (value, key) {
+            if (value > mediaFaturado)
+                diasAcimaMedia.push(key);
+        });
+
+        //Exibe os resultados
+        document.write("<h2>Menor Valor</h2>");
+        document.write("<p>Dia: " + menorValor.dia + " - Valor: " + menorValor.valor + "</p>");
+        document.write("<h2>Maior Valor</h2>");
+        document.write("<p>Dia: " + maiorValor.dia + " - Valor: " + maiorValor.valor + "</p>");
+        document.write("<h2>Análise de Dados</h2>");
+        document.write("<p>Dias sem Faturamento: " + semFaturamento + "</p>");
+        document.write("<p>Dias com Faturamento: " + comFaturamento + "</p>");
+        document.write("<p>Total Faturado: " + totalFaturado + "</p>");
+        document.write("<p>Média Faturado: " + mediaFaturado + "</p>");
+        document.write("<p>" + diasAcimaMedia.length + " Dias Acima da Média: " + diasAcimaMedia.join(", ") + "</p>");
+    </script>
+
+    <h1>Tópico 4</h1>
+
+    <script>
+        //Variaveis
+        var faturamento = {
+            "SP": 67836.43,
+            "RJ": 36678.66,
+            "MG": 29229.88,
+            "ES": 27165.48,
+            "Outros": 19849.53
+        };
+
+        var percentual = {};
+        var totalFaturamento = 0.0;
+
+        //Calcula o total do faturamento
+        for (var estado in faturamento) {
+            if (faturamento.hasOwnProperty(estado)) {
+                totalFaturamento += faturamento[estado];
+            }
+        }
+
+        //Calcula o percentual de cada estado
+        for (var estado in faturamento) {
+            if (faturamento.hasOwnProperty(estado)) {
+                percentual[estado] = (faturamento[estado] / totalFaturamento) * 100;
+            }
+        }
+
+        //Exibe o resultado
+        document.write("<h2>Faturamento</h2>");
+        document.write("<p>Total Faturamento: " + totalFaturamento + "</p>");
+        document.write("<p>Percentual de cada estado</p>");
+
+        for (var estado in percentual) {
+            if (percentual.hasOwnProperty(estado)) {
+                document.write("<p>" + estado + ": " + percentual[estado] + "%</p>");
+            }
+        }
+    </script>
+
+    <h1>Tópico 5</h1>
+
+    <script>
+        //Variaveis
+        var texto = "Inverter Texto";
+        var inverso = "";
+
+        // Inverte o texto e armazena na variavel inverso
+        for (var i = texto.length - 1; i >= 0; i--) {
+            inverso += texto.charAt(i);
+        }
+
+        //Exibe o resultado
+        document.write("<h2>Texto</h2>");
+        document.write("<p>" + texto + "</p>");
+        document.write("<h2>Inverso</h2>");
+        document.write("<p>" + inverso + "</p>");
+    </script>
+
+</body>
+</html>
